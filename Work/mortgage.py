@@ -19,6 +19,9 @@ while principle > 0:
     total_paid += payment
     principle = principle * (1 + rate / 12) - payment
     months = months + 1
+    if principle < 0:
+        total_paid += principle
+        principle = 0
     print(f"{months}, ${total_paid:,.2f}, ${principle:,.2f}")
 
 print(f"Total paid of ${total_paid:,.2f}")
