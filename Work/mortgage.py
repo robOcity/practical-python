@@ -22,7 +22,6 @@ while principle > 0:
     if principle < 0:
         total_paid += principle
         principle = 0
-    print(f"{months}, ${total_paid:,.2f}, ${principle:,.2f}")
+    print(f"{months:6d}  {total_paid:12,.2f}  {principle:10,.2f}")
 
-print(f"Total paid of ${total_paid:,.2f}")
-print(f"Months {months}")
+print(f"\nTotal paid of ${total_paid:,.2f} over months {months}")
