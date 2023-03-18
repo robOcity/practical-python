@@ -1,6 +1,6 @@
 # pcost_gzip.py
 #
-# Exercise 1.27 - Read portfolioi gzipped data file and total up cost of purchasing all shares
+# Exercise 1.27 - Read portfolio gzipped data file and total up cost of purchasing all shares
 
 import gzip
 
