@@ -12,7 +12,10 @@ def portfolio_cost(file):
         for line in f.readlines():
             stock, shares, price = line.split(",")
             print(stock, shares, price.strip())
-            total_cost += float(shares) * float(price.strip())
+            try:
+                total_cost += int(shares) * float(price.strip())
+            except ValueError:
+                print("Cannot parse line: ", line)
     return total_cost
 
 
