@@ -3,6 +3,7 @@
 # Exercise 1.27 - Read portfolioi data file and total up cost of purchasing all shares
 
 import csv
+import sys
 
 
 def portfolio_cost_csv(filename):
@@ -37,7 +38,12 @@ def calc_total_cost(shares, price):
         print(f"Cannot parse either {shares} and/or {price}")
 
 
-cost = portfolio_cost("Data/portfolio.csv")
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = "Data/portfolio.csv"
+
+cost = portfolio_cost(filename)
 print(f"Total cost ${cost:,.2f}")
 
 cost = portfolio_cost_csv("Data/portfolio.csv")
