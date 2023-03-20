@@ -31,7 +31,7 @@ portfolio = [
 
 portfolio[0]            # ('GOOG', 100, 490.1)
 portfolio[2]            # ('CAT', 150, 83.44)
-```
+```.
 
 ### List construction
 
