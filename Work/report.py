@@ -3,6 +3,7 @@
 # Exercise 2.5
 
 import csv
+from pprint import pprint
 
 
 def read_portfolio(filename):
@@ -24,5 +25,5 @@ total_cost = 0
 for stock in portfolio:
     total_cost += stock.get("shares", 0) * stock.get("price", 0.0)
 
-print(portfolio)
+pprint(portfolio)
 print(f"Total cost: ${total_cost:,.2f}")
