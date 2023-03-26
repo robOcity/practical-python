@@ -30,7 +30,7 @@ def get_prices(filename):
             try:
                 prices[row[0]] = float(row[1])
             except IndexError:
-                print(f'Unable to read "{row}"')
+                pass
     return prices
 
 
@@ -45,7 +45,12 @@ print(f"Total cost: ${total_cost:,.2f}")
 prices = get_prices("Data/prices.csv")
 change = 0.0
 for stock in portfolio:
-    cost = stock.get("shares") * stock.get("price")
-    current_value = stock.get("shares", 0) * prices.get(stock.get("name"), 0.0)
+    name, shares, price = stock.values()
+    if not prices.get(name):
+        print(f"Unable to find current price for {name} shares")
+        continue
+    cost = shares * price
+    current_value = shares * prices.get(name, 0.0)
     change += current_value - cost
+
 print(f"The value of the portfolio has changed by ${change:,.2f}")
