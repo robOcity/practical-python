@@ -47,26 +47,16 @@ def make_report(portfolio, prices):
 
 
 portfolio = get_portfolio("Data/portfolio.csv")
-total_cost = 0
-for stock in portfolio:
-    total_cost += stock.get("shares", 0) * stock.get("price", 0.0)
-
-pprint(portfolio)
-print(f"Total cost: ${total_cost:,.2f}")
-
 prices = get_prices("Data/prices.csv")
-
 report = make_report(portfolio, prices)
-pprint(report)
 
-change = 0.0
-for stock in portfolio:
-    name, shares, price = stock.values()
-    if not prices.get(name):
-        print(f"Unable to find current price for {name} shares")
-        continue
-    cost = shares * price
-    current_value = shares * prices.get(name, 0.0)
-    change += current_value - cost
+total_cost, aggregate_change = 0, 0
+WIDTH = 12
+for name, shares, price, change in report:
+    print(
+        f"{name:>{WIDTH}s} {shares:>{WIDTH}d} {price:>{WIDTH}.2f} {change:>{WIDTH}.2f}"
+    )
+    total_cost += price * shares
+    aggregate_change += change * shares
 
-print(f"The value of the portfolio has changed by ${change:,.2f}")
+print(f"\nCost: ${total_cost: ,.2f}   Change: ${aggregate_change: ,.2f}")
