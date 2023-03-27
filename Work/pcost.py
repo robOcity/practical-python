@@ -11,10 +11,13 @@ def portfolio_cost_csv(filename):
     total_cost = 0
     with open(filename, "rt") as f:
         rows = csv.reader(f)
-        headers = next(rows)
-        for row in rows:
-            sym, shares, price = row[0], int(row[1]), float(row[2])
-            total_cost += calc_total_cost(shares, price)
+        next(rows)  # step over header
+        for row_no, row in enumerate(rows):
+            try:
+                sym, shares, price = row[0], int(row[1]), float(row[2])
+                total_cost += int(shares) * float(price)
+            except ValueError:
+                print(f"Row #{row_no} contains missing/invalid data: {row}")
     return total_cost
 
 
@@ -23,19 +26,16 @@ def portfolio_cost(filename):
     total_cost = 0
     with open(filename, "rt") as f:
         headers = f.readline().split(",")
-        print(headers)
         for line in f.readlines():
             sym, shares, price = line.split(",")
-            total_cost += calc_total_cost(shares, price)
+            try:
+                total_cost += int(shares) * float(price)
+            except ValueError:
+                print(f"Cannot parse '{shares}' or '{price}'")
+            except TypeError:
+                print(f"Cannot multiple '{shares}' and '{float(price)}'")
+
     return total_cost
-
-
-def calc_total_cost(shares, price):
-    "calculates the total cost of purchasing shares"
-    try:
-        return int(shares) * float(price)
-    except ValueError:
-        print(f"Cannot parse either {shares} and/or {price}")
 
 
 if len(sys.argv) == 2:
@@ -44,7 +44,7 @@ else:
     filename = "Data/portfolio.csv"
 
 cost = portfolio_cost(filename)
-print(f"Total cost ${cost:,.2f}")
+print(f"Total cost: ${cost:,.2f}")
 
-cost = portfolio_cost_csv("Data/portfolio.csv")
-print(f"Total cost by csv ${cost:,.2f}")
+cost = portfolio_cost_csv(filename)
+print(f"Total cost using CSV: ${cost:,.2f}")
