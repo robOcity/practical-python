@@ -59,8 +59,10 @@ print(
 print("{:->10}".format("") + 3 * " {:->10}".format(""))
 
 total_cost, aggregate_change = 0, 0
+fmt_price = ""
 for name, shares, price, change in report:
-    print(f"{name:>{10}s} {shares:>{10}d} {price:>{10}.2f} {change:>{10}.2f}")
+    fmt_price = "${:>,.2f}".format(price)
+    print(f"{name:>10s} {shares:>10d} {fmt_price:>10s} {change:>10.2f}")
     total_cost += price * shares
     aggregate_change += change * shares
 
