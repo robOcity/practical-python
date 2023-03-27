@@ -50,12 +50,17 @@ portfolio = get_portfolio("Data/portfolio.csv")
 prices = get_prices("Data/prices.csv")
 report = make_report(portfolio, prices)
 
-total_cost, aggregate_change = 0, 0
-WIDTH = 12
-for name, shares, price, change in report:
-    print(
-        f"{name:>{WIDTH}s} {shares:>{WIDTH}d} {price:>{WIDTH}.2f} {change:>{WIDTH}.2f}"
+headers = ("Name", "Shares", "Price", "Change")
+print(
+    f"{headers[0]:>{10}s} {headers[1]:>{10}s} {headers[2]:>{10}s} {headers[3]:>{10}s}".format(
+        headers
     )
+)
+print("{:->10}".format("") + 3 * " {:->10}".format(""))
+
+total_cost, aggregate_change = 0, 0
+for name, shares, price, change in report:
+    print(f"{name:>{10}s} {shares:>{10}d} {price:>{10}.2f} {change:>{10}.2f}")
     total_cost += price * shares
     aggregate_change += change * shares
 
