@@ -20,7 +20,7 @@ def portfolio_cost(filename):
                 price = float(record["price"])
                 total_cost += shares * price
             except ValueError:
-                print(f"Row #{row_no} contains missing/invalid data: {row}")
+                print(f"Row #{row_no}\nFields: {header}\nContains bad data: {row}\n")
     return total_cost
 
 
