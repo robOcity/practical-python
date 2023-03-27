@@ -34,6 +34,18 @@ def get_prices(filename):
     return prices
 
 
+def make_report(portfolio, prices):
+    """Determine the change in stock prices returning a list of tuples (name, shares, price, change)"""
+    report = []
+    for stock in portfolio:
+        name, shares, price = stock.values()
+        if not prices.get(name):
+            continue
+        change = prices.get(name) - price
+        report.append((name, shares, price, change))
+    return report
+
+
 portfolio = get_portfolio("Data/portfolio.csv")
 total_cost = 0
 for stock in portfolio:
@@ -43,6 +55,10 @@ pprint(portfolio)
 print(f"Total cost: ${total_cost:,.2f}")
 
 prices = get_prices("Data/prices.csv")
+
+report = make_report(portfolio, prices)
+pprint(report)
+
 change = 0.0
 for stock in portfolio:
     name, shares, price = stock.values()
