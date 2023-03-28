@@ -7,7 +7,9 @@ from pprint import pprint
 
 
 def get_portfolio(filename):
-    """Reads file provide and returns a list of dicts of stock holdings {name, shares, price}."""
+    """
+    Reads file provide and returns a list of dicts of stock holdings {name, shares, price}.
+    """
     portfolio = []
 
     with open(filename, "rt") as f:
@@ -21,7 +23,9 @@ def get_portfolio(filename):
 
 
 def get_prices(filename):
-    """Reads price data from a file and returns a dictionary {stock, price}."""
+    """
+    Reads price data from a file and returns a dictionary {stock, price}.
+    """
     prices = {}
     with open(filename, "rt") as f:
         rows = csv.reader(f)
@@ -35,7 +39,9 @@ def get_prices(filename):
 
 
 def make_report(portfolio, prices):
-    """Determine the change in stock prices returning a list of tuples (name, shares, price, change)"""
+    """
+    Determine the change in stock prices returning a list of tuples (name, shares, price, change)
+    """
     report = []
     for stock in portfolio:
         name, shares, price = stock.values()
@@ -48,7 +54,7 @@ def make_report(portfolio, prices):
 
 def print_report(report):
     """
-    Prints a well-formatted report given a list of name, shares, change dicts
+    Prints a well-formatted report given a list of name, shares, change dicts.
     """
     headers = ("Name", "Shares", "Price", "Change")
     print(
@@ -69,7 +75,14 @@ def print_report(report):
     print(f"\nCost: ${total_cost: ,.2f}   Change: ${aggregate_change: ,.2f}")
 
 
-portfolio = get_portfolio("Data/portfolio.csv")
-prices = get_prices("Data/prices.csv")
-report = make_report(portfolio, prices)
-print_report(report)
+def portfolio_report(portfolio_csv_file, prices_csv_file):
+    """
+    Generates a report for a portfolio of stocks and current prices.
+    """
+    portfolio = get_portfolio(portfolio_csv_file)
+    prices = get_prices(prices_csv_file)
+    report = make_report(portfolio, prices)
+    print_report(report)
+
+
+portfolio_report("Data/portfolio.csv", "Data/prices.csv")
