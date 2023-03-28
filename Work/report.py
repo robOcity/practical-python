@@ -46,24 +46,30 @@ def make_report(portfolio, prices):
     return report
 
 
+def print_report(report):
+    """
+    Prints a well-formatted report given a list of name, shares, change dicts
+    """
+    headers = ("Name", "Shares", "Price", "Change")
+    print(
+        f"{headers[0]:>{10}s} {headers[1]:>{10}s} {headers[2]:>{10}s} {headers[3]:>{10}s}".format(
+            headers
+        )
+    )
+    print("{:->10}".format("") + 3 * " {:->10}".format(""))
+
+    total_cost, aggregate_change = 0, 0
+    fmt_price = ""
+    for name, shares, price, change in report:
+        fmt_price = "${:>,.2f}".format(price)
+        print(f"{name:>10s} {shares:>10d} {fmt_price:>10s} {change:>10.2f}")
+        total_cost += price * shares
+        aggregate_change += change * shares
+
+    print(f"\nCost: ${total_cost: ,.2f}   Change: ${aggregate_change: ,.2f}")
+
+
 portfolio = get_portfolio("Data/portfolio.csv")
 prices = get_prices("Data/prices.csv")
 report = make_report(portfolio, prices)
-
-headers = ("Name", "Shares", "Price", "Change")
-print(
-    f"{headers[0]:>{10}s} {headers[1]:>{10}s} {headers[2]:>{10}s} {headers[3]:>{10}s}".format(
-        headers
-    )
-)
-print("{:->10}".format("") + 3 * " {:->10}".format(""))
-
-total_cost, aggregate_change = 0, 0
-fmt_price = ""
-for name, shares, price, change in report:
-    fmt_price = "${:>,.2f}".format(price)
-    print(f"{name:>10s} {shares:>10d} {fmt_price:>10s} {change:>10.2f}")
-    total_cost += price * shares
-    aggregate_change += change * shares
-
-print(f"\nCost: ${total_cost: ,.2f}   Change: ${aggregate_change: ,.2f}")
+print_report(report)
