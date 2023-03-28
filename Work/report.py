@@ -82,9 +82,11 @@ def print_report(report):
 def portfolio_report(portfolio_data_file, prices_data_file, delimeter=","):
     """
     Generates a report for a portfolio of stocks and current prices.
+
+    Use the delimeter parameter to provide an alternate (not comma) character.
     """
-    portfolio = get_portfolio(portfolio_data_file, delimiter=delimeter)
-    prices = get_prices(prices_data_file, delimiter=delimeter)
+    portfolio = get_portfolio(portfolio_data_file, delimeter)
+    prices = get_prices(prices_data_file, delimeter)
     report = make_report(portfolio, prices)
     print_report(report)
 
