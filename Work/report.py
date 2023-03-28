@@ -3,17 +3,19 @@
 # Exercise 2.5
 
 import csv
-from pprint import pprint
+import sys
 
 
-def get_portfolio(filename):
+def get_portfolio(filename, delimeter=","):
     """
     Reads file provide and returns a list of dicts of stock holdings {name, shares, price}.
+
+    Use the delimeter parameter to provide an alternate (not comma) character.
     """
     portfolio = []
 
     with open(filename, "rt") as f:
-        rows = csv.reader(f)
+        rows = csv.reader(f, delimiter=delimeter)
         headers = next(rows)
         for row in rows:
             portfolio.append(
@@ -22,13 +24,15 @@ def get_portfolio(filename):
     return portfolio
 
 
-def get_prices(filename):
+def get_prices(filename, delimeter=","):
     """
     Reads price data from a file and returns a dictionary {stock, price}.
+
+    Use the delimeter parameter to provide an alternate (not comma) character.
     """
     prices = {}
     with open(filename, "rt") as f:
-        rows = csv.reader(f)
+        rows = csv.reader(f, delimiter=delimeter)
         header = next(rows)
         for row in rows:
             try:
@@ -75,14 +79,19 @@ def print_report(report):
     print(f"\nCost: ${total_cost: ,.2f}   Change: ${aggregate_change: ,.2f}")
 
 
-def portfolio_report(portfolio_csv_file, prices_csv_file):
+def portfolio_report(portfolio_data_file, prices_data_file, delimeter=","):
     """
     Generates a report for a portfolio of stocks and current prices.
     """
-    portfolio = get_portfolio(portfolio_csv_file)
-    prices = get_prices(prices_csv_file)
+    portfolio = get_portfolio(portfolio_data_file, delimiter=delimeter)
+    prices = get_prices(prices_data_file, delimiter=delimeter)
     report = make_report(portfolio, prices)
     print_report(report)
 
 
-portfolio_report("Data/portfolio.csv", "Data/prices.csv")
+if len(sys.argv) == 3:
+    portfolio_file, prices_file = sys.argv[1], sys.argv[2]
+else:
+    portfolio_file, prices_file = "Data/portfolio.csv", "Data/prices.csv"
+
+portfolio_report(portfolio_file, prices_file)
