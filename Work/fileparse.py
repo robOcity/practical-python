@@ -3,7 +3,7 @@
 # Exercise 3.3
 
 import csv
-from typing import Any, Tuple, Sequence, List, Dict, Callable, Union
+from typing import Any, Tuple, List, Dict, Callable, Union
 
 
 def parse_csv(
@@ -21,7 +21,6 @@ def parse_csv(
         rows = csv.reader(f, delimiter=delimiter)
         if has_headers:
             header = next(rows)
-            print("header: {header}")
             if not select:
                 select = header
             if not types:
