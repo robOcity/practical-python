@@ -3,11 +3,13 @@
 # Exercise 3.3
 
 import csv
-from typing import List, Dict
+from typing import List, Dict, Callable
 
 
 def parse_csv(
-    filename: str, select: List[str] = ["price", "name", "shares"]
+    filename: str,
+    select: List[str] = ["price", "name", "shares"],
+    types: List[Callable] = [str, int, float],
 ) -> List[Dict[str, str]]:
     """
     Parses a CSV file into a list of records each represented as a dictionary.
@@ -17,7 +19,11 @@ def parse_csv(
         rows = csv.reader(f)
         header = next(rows)
         records = [
-            {name: value for name, value in zip(header, row) if name in select}
+            {
+                name: type(value)
+                for type, name, value in zip(types, header, row)
+                if name in select
+            }
             for row in rows
             if row
         ]
