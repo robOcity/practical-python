@@ -33,7 +33,6 @@ def get_prices(filename, delimeter=","):
     prices = {}
     with open(filename, "rt") as f:
         rows = csv.reader(f, delimiter=delimeter)
-        header = next(rows)
         for row in rows:
             try:
                 prices[row[0]] = float(row[1])
