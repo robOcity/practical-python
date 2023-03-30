@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # pcost.py
 #
 # Exercise 1.27 - Read portfolio data file and total up cost of purchasing all shares
