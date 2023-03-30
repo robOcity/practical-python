@@ -17,6 +17,8 @@ def parse_csv(
     Parses a CSV file into a list of records as a list of dicts or tuples.
     """
     records = []
+    if select and not has_headers:
+        raise RuntimeError("select argument requires column headers")
     with open(filename, "rt") as f:
         rows = csv.reader(f, delimiter=delimiter)
         if has_headers:
