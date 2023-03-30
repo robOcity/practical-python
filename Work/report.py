@@ -4,6 +4,7 @@
 
 import csv
 import sys
+import fileparse
 
 
 def get_portfolio(filename, delimeter=","):
@@ -12,16 +13,13 @@ def get_portfolio(filename, delimeter=","):
 
     Use the delimeter parameter to provide an alternate (not comma) character.
     """
-    portfolio = []
 
-    with open(filename, "rt") as f:
-        rows = csv.reader(f, delimiter=delimeter)
-        headers = next(rows)
-        for row in rows:
-            portfolio.append(
-                {"name": row[0], "shares": int(row[1]), "price": float(row[2])}
-            )
-    return portfolio
+    return fileparse.parse_csv(
+        filename,
+        select=["name", "shares", "price"],
+        types=[str, int, float],
+        delimiter=delimeter,
+    )
 
 
 def get_prices(filename, delimeter=","):
@@ -30,15 +28,8 @@ def get_prices(filename, delimeter=","):
 
     Use the delimeter parameter to provide an alternate (not comma) character.
     """
-    prices = {}
-    with open(filename, "rt") as f:
-        rows = csv.reader(f, delimiter=delimeter)
-        for row in rows:
-            try:
-                prices[row[0]] = float(row[1])
-            except IndexError:
-                pass
-    return prices
+
+    return fileparse.parse_csv(filename, types=[str, float], has_headers=False)
 
 
 def make_report(portfolio, prices):
@@ -85,7 +76,7 @@ def portfolio_report(portfolio_data_file, prices_data_file, delimeter=","):
     Use the delimeter parameter to provide an alternate (not comma) character.
     """
     portfolio = get_portfolio(portfolio_data_file, delimeter)
-    prices = get_prices(prices_data_file, delimeter)
+    prices = dict(get_prices(prices_data_file, delimeter))
     report = make_report(portfolio, prices)
     print_report(report)
 
