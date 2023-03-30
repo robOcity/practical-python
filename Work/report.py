@@ -3,6 +3,7 @@
 #
 # Exercise 2.5
 
+import gzip
 import fileparse
 
 
@@ -12,13 +13,13 @@ def get_portfolio(filename, delimeter=","):
 
     Use the delimeter parameter to provide an alternate (not comma) character.
     """
-
-    return fileparse.parse_csv(
-        filename,
-        select=["name", "shares", "price"],
-        types=[str, int, float],
-        delimiter=delimeter,
-    )
+    with open(filename, "rt") as file_handle:
+        return fileparse.parse_csv(
+            file_handle,
+            select=["name", "shares", "price"],
+            types=[str, int, float],
+            delimiter=delimeter,
+        )
 
 
 def get_prices(filename, delimeter=","):
@@ -28,7 +29,8 @@ def get_prices(filename, delimeter=","):
     Use the delimeter parameter to provide an alternate (not comma) character.
     """
 
-    return fileparse.parse_csv(filename, types=[str, float], has_headers=False)
+    with open(filename, "rt") as file_handle:
+        return fileparse.parse_csv(file_handle, types=[str, float], has_headers=False)
 
 
 def make_report(portfolio, prices):
@@ -85,11 +87,9 @@ def main(argv):
     Provide portfolio and price data files to generate an investment report.
     """
 
-    if len(argv) == 3:
-        portfolio_file, prices_file = argv[1], argv[2]
-    else:
-        portfolio_file, prices_file = "Data/portfolio.csv", "Data/prices.csv"
-    portfolio_report(portfolio_file, prices_file)
+    if len(argv) != 3:
+        raise SystemExit(f"Usage: {argv[0]} portfolio_csv prices_csv")
+    portfolio_report(argv[1], argv[2])
 
 
 if __name__ == "__main__":

@@ -3,7 +3,6 @@
 #
 # Exercise 1.27 - Read portfolio data file and total up cost of purchasing all shares
 
-import csv
 import sys
 import report
 
@@ -21,12 +20,10 @@ def main(argv):
     """
     Calculate the total cost of the portfolio using the CSV file provided.
     """
-    if len(argv) == 2:
-        filename = argv[1]
-    else:
-        filename = "Data/portfolio.csv"
+    if len(argv) != 2:
+        raise SystemExit(f"Usage: {argv[0]} portfolio_csv")
 
-    cost = portfolio_cost(filename)
+    cost = portfolio_cost(argv[1])
     print(f"Total cost: ${cost:,.2f}")
 
 
