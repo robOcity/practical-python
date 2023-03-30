@@ -25,15 +25,19 @@ def parse_csv(
                 select = header
             if not types:
                 types = [str for col in header]
-            records = [
-                {
-                    name: type(value)
-                    for type, name, value in zip(types, header, row)
-                    if name in select
-                }
-                for row in rows
-                if row
-            ]
+            try:
+                records = [
+                    {
+                        name: type(value)
+                        for type, name, value in zip(types, header, row)
+                        if name in select
+                    }
+                    for row in rows
+                    if row
+                ]
+            except ValueError as ve:
+                print("Couldn't convert data. Reason: ", ve)
+                raise
         else:
             records = [
                 tuple([type(val) for type, val in zip(types, row)]) for row in rows
