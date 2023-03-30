@@ -1,27 +1,19 @@
 # pcost.py
 #
-# Exercise 1.27 - Read portfolioi data file and total up cost of purchasing all shares
+# Exercise 1.27 - Read portfolio data file and total up cost of purchasing all shares
 
 import csv
 import sys
+import report
 
 
 def portfolio_cost(filename):
     "returns the total cost to purchase the portfolio contained in file"
-    total_cost = 0
-    with open(filename, "rt") as f:
-        rows = csv.reader(f)
-        header = next(rows)
-        print(header)
-        for row_no, row in enumerate(rows):
-            record = dict(zip(header, row))
-            try:
-                shares = int(record["shares"])
-                price = float(record["price"])
-                total_cost += shares * price
-            except ValueError:
-                print(f"Row #{row_no}\nFields: {header}\nContains bad data: {row}\n")
-    return total_cost
+    total_cost = 0.0
+
+    portfolio = report.get_portfolio(filename)
+    stock_cost = [stock.get("shares") * stock.get("price") for stock in portfolio]
+    return sum(stock_cost)
 
 
 if len(sys.argv) == 2:
