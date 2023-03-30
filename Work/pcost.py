@@ -16,10 +16,20 @@ def portfolio_cost(filename):
     return sum(stock_cost)
 
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = "Data/portfolio.csv"
+def main(argv):
+    """
+    Calculate the total cost of the portfolio using the CSV file provided.
+    """
+    if len(argv) == 2:
+        filename = argv[1]
+    else:
+        filename = "Data/portfolio.csv"
 
-cost = portfolio_cost(filename)
-print(f"Total cost: ${cost:,.2f}")
+    cost = portfolio_cost(filename)
+    print(f"Total cost: ${cost:,.2f}")
+
+
+if __name__ == "__main__":
+    import sys
+
+    main(sys.argv)

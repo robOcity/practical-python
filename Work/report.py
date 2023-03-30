@@ -2,8 +2,6 @@
 #
 # Exercise 2.5
 
-import csv
-import sys
 import fileparse
 
 
@@ -81,9 +79,19 @@ def portfolio_report(portfolio_data_file, prices_data_file, delimeter=","):
     print_report(report)
 
 
-if len(sys.argv) == 3:
-    portfolio_file, prices_file = sys.argv[1], sys.argv[2]
-else:
-    portfolio_file, prices_file = "Data/portfolio.csv", "Data/prices.csv"
+def main(argv):
+    """
+    Provide portfolio and price data files to generate an investment report.
+    """
 
-portfolio_report(portfolio_file, prices_file)
+    if len(argv) == 3:
+        portfolio_file, prices_file = argv[1], argv[2]
+    else:
+        portfolio_file, prices_file = "Data/portfolio.csv", "Data/prices.csv"
+    portfolio_report(portfolio_file, prices_file)
+
+
+if __name__ == "__main__":
+    import sys
+
+    main(sys.argv)
