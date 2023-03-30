@@ -42,7 +42,9 @@ def parse_csv(
                 raise
         else:
             records = [
-                tuple([type(val) for type, val in zip(types, row)]) for row in rows
+                tuple([type(val) for type, val in zip(types, row)])
+                for row in rows
+                if row
             ]
 
     return records
