@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # report.py
 #
-# Exercise 2.5
+# Provides a nicely formatted report showing changes in stock valuations.
 
 import gzip
 import fileparse
+import tableformatter
 from stock import Stock
 
 
@@ -49,23 +50,16 @@ def make_report(portfolio, prices):
     return report
 
 
-def print_report(report):
+def print_report(report, formatter):
     """
-    Prints a well-formatted report given a list of name, shares, change dicts.
+    Prints a well-formatted report given a list of name, shares, change data.
     """
-    headers = ("Name", "Shares", "Price", "Change")
-    print(
-        f"{headers[0]:>{10}s} {headers[1]:>{10}s} {headers[2]:>{10}s} {headers[3]:>{10}s}".format(
-            headers
-        )
-    )
-    print("{:->10}".format("") + 3 * " {:->10}".format(""))
+    formatter.headings("Name", "Shares", "Price", "Change")
 
     total_cost, aggregate_change = 0, 0
-    fmt_price = ""
     for name, shares, price, change in report:
-        fmt_price = "${:>,.2f}".format(price)
-        print(f"{name:>10s} {shares:>10d} {fmt_price:>10s} {change:>10.2f}")
+        rowdata = [name, shares, f"{price:10.2f}", f"{change:10.2f}"]
+        formatter.row(rowdata)
         total_cost += price * shares
         aggregate_change += change * shares
 
@@ -81,7 +75,8 @@ def portfolio_report(portfolio_data_file, prices_data_file, delimeter=","):
     portfolio = read_portfolio(portfolio_data_file, delimeter)
     prices = read_prices(prices_data_file, delimeter)
     report = make_report(portfolio, prices)
-    print_report(report)
+    formatter = tableformatter.TextTableFormatter()
+    print_report(report, formatter)
 
 
 def main(argv):

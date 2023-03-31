@@ -1,6 +1,6 @@
 # fileparse.py
 #
-# Exercise 3.3
+# Parses CSV data files returning portfolio and stock price data.
 
 import csv
 from typing import Any, Tuple, List, Dict, Callable, Union, TextIO

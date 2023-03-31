@@ -1,4 +1,6 @@
-# A class representing a stock its data and functionality
+# stock.py
+#
+# A class representing a stock its data and related functionality.
 
 
 class Stock:
