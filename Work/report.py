@@ -58,7 +58,7 @@ def print_report(report, formatter):
 
     total_cost, aggregate_change = 0, 0
     for name, shares, price, change in report:
-        rowdata = [name, shares, f"{price:10.2f}", f"{change:10.2f}"]
+        rowdata = [name, f"{str(shares):s}", f"{price:>.2f}", f"{change:>.2f}"]
         formatter.row(rowdata)
         total_cost += price * shares
         aggregate_change += change * shares
@@ -75,7 +75,7 @@ def portfolio_report(portfolio_data_file, prices_data_file, delimeter=","):
     portfolio = read_portfolio(portfolio_data_file, delimeter)
     prices = read_prices(prices_data_file, delimeter)
     report = make_report(portfolio, prices)
-    formatter = tableformatter.TextTableFormatter()
+    formatter = tableformatter.CSVTableFormatter()
     print_report(report, formatter)
 
 

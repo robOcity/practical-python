@@ -32,3 +32,15 @@ class TextTableFormatter(TableFormatter):
         for d in rowdata:
             print(f"{str(d):>10s}", end=" ")
         print()
+
+
+class CSVTableFormatter(TableFormatter):
+    """
+    Emit portfolio as a in CSV format.
+    """
+
+    def headings(self, *headers):
+        print(",".join(headers))
+
+    def row(self, rowdata):
+        print(",".join(rowdata))
