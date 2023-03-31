@@ -5,14 +5,15 @@
 
 import sys
 import report
+from stock import Stock
 
 
 def portfolio_cost(filename):
     "returns the total cost to purchase the portfolio contained in file"
     total_cost = 0.0
 
-    portfolio = report.get_portfolio(filename)
-    stock_cost = [stock.get("shares") * stock.get("price") for stock in portfolio]
+    portfolio = report.read_portfolio(filename)
+    stock_cost = [stock.cost() for stock in portfolio]
     return sum(stock_cost)
 
 

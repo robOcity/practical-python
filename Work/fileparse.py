@@ -41,8 +41,8 @@ def parse_csv(
             print("Couldn't convert data. Reason: ", ve)
             raise
     else:
-        records = [
-            tuple([type(val) for type, val in zip(types, row)]) for row in rows if row
-        ]
+        records = dict(
+            [tuple([type(val) for type, val in zip(types, row)]) for row in rows if row]
+        )
 
     return records

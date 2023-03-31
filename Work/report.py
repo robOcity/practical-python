@@ -5,24 +5,27 @@
 
 import gzip
 import fileparse
+from stock import Stock
 
 
-def get_portfolio(filename, delimeter=","):
+def read_portfolio(filename, delimeter=","):
     """
     Reads file provide and returns a list of dicts of stock holdings {name, shares, price}.
 
     Use the delimeter parameter to provide an alternate (not comma) character.
     """
+    stock_dicts = []
     with open(filename, "rt") as file_handle:
-        return fileparse.parse_csv(
+        stock_dicts = fileparse.parse_csv(
             file_handle,
             select=["name", "shares", "price"],
             types=[str, int, float],
             delimiter=delimeter,
         )
+    return [Stock(sd["name"], sd["shares"], sd["price"]) for sd in stock_dicts]
 
 
-def get_prices(filename, delimeter=","):
+def read_prices(filename, delimeter=","):
     """
     Reads price data from a file and returns a dictionary {stock, price}.
 
@@ -39,11 +42,10 @@ def make_report(portfolio, prices):
     """
     report = []
     for stock in portfolio:
-        name, shares, price = stock.values()
-        if not prices.get(name):
+        if not prices.get(stock.name):
             continue
-        change = prices.get(name) - price
-        report.append((name, shares, price, change))
+        change = prices.get(stock.name) - stock.price
+        report.append((stock.name, stock.shares, stock.price, change))
     return report
 
 
@@ -76,8 +78,8 @@ def portfolio_report(portfolio_data_file, prices_data_file, delimeter=","):
 
     Use the delimeter parameter to provide an alternate (not comma) character.
     """
-    portfolio = get_portfolio(portfolio_data_file, delimeter)
-    prices = dict(get_prices(prices_data_file, delimeter))
+    portfolio = read_portfolio(portfolio_data_file, delimeter)
+    prices = read_prices(prices_data_file, delimeter)
     report = make_report(portfolio, prices)
     print_report(report)
 
