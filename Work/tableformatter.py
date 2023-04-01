@@ -36,11 +36,28 @@ class TextTableFormatter(TableFormatter):
 
 class CSVTableFormatter(TableFormatter):
     """
-    Emit portfolio as a in CSV format.
+    Emit portfolio data as a in CSV format.
     """
 
     def headings(self, *headers):
+        print(headers)
         print(",".join(headers))
 
     def row(self, rowdata):
+        print(rowdata)
         print(",".join(rowdata))
+
+
+class HTMLTableFormatter(TableFormatter):
+    """
+    Emit portfolio data as an HTML table
+    """
+
+    def headings(self, *headers):
+        print(self.format_table_row(headers))
+
+    def row(self, rowdata):
+        print(self.format_table_row(rowdata))
+
+    def format_table_row(self, data):
+        return "<tr>" + "".join(["<td>" + d + "</td>" for d in data]) + "</tr>"

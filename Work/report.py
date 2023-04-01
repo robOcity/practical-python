@@ -3,7 +3,6 @@
 #
 # Provides a nicely formatted report showing changes in stock valuations.
 
-import gzip
 import fileparse
 import tableformatter
 from stock import Stock
@@ -75,7 +74,7 @@ def portfolio_report(portfolio_data_file, prices_data_file, delimeter=","):
     portfolio = read_portfolio(portfolio_data_file, delimeter)
     prices = read_prices(prices_data_file, delimeter)
     report = make_report(portfolio, prices)
-    formatter = tableformatter.CSVTableFormatter()
+    formatter = tableformatter.HTMLTableFormatter()
     print_report(report, formatter)
 
 
