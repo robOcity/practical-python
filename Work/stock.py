@@ -5,7 +5,7 @@
 
 class Stock:
     def __init__(self, name: str, shares: int, price: float):
-        self.name = name
+        self.name = name.upper()
         self.shares = shares
         self.price = price
 
@@ -19,3 +19,6 @@ class Stock:
             )
         self.shares = self.shares - num_shares
         return self.shares
+
+    def __repr__(self):
+        return f"Stock({self.name}, {self.shares}, {self.price})"
