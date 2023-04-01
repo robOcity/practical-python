@@ -24,3 +24,9 @@ print_test_header(
     'parse_csv("Data/portfolio.dat", delimiter=" ", types=[str, int, float]))'
 )
 pprint(parse_csv("Data/portfolio.dat", delimiter=" ", types=[str, int, float]))
+
+# TODO - Add tests
+# python pcost.py Data/portfolio.csv
+# python report.py Data/portfolio.csv Data/prices.csv fmt=html
+# python report.py Data/portfolio.csv Data/prices.csv fmt=csv
+# python report.py Data/portfolio.csv Data/prices.csv fmt=txt

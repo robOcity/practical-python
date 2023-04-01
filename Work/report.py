@@ -74,7 +74,7 @@ def portfolio_report(portfolio_data_file, prices_data_file, delimeter=",", fmt="
     portfolio = read_portfolio(portfolio_data_file, delimeter)
     prices = read_prices(prices_data_file, delimeter)
     report = make_report(portfolio, prices)
-    print_report(report, tableformatter.create_format(fmt))
+    print_report(report, tableformatter.create_formatter(fmt))
 
 
 def main(argv):

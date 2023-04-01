@@ -3,7 +3,10 @@
 # Classes for formatting data as tables
 
 
-def create_format(fmt):
+def create_formatter(fmt):
+    """
+    Factory method for TableFormatters.
+    """
     TableFormatter = None
     if fmt == "txt":
         return TextTableFormatter()
@@ -14,6 +17,23 @@ def create_format(fmt):
     else:
         raise RuntimeError(
             f"Cannot format as directed. No '{fmt}' formatter is available."
+        )
+
+
+def print_table(portfolio, columns, formatter):
+    """
+    Prints a table of Stocks as determined by the configured TableFormatter.
+    """
+    fmt, rowdata = {}, []
+    formatter.headings(columns)
+    for stock in portfolio:
+        if not fmt:
+            fmt = getattr(stock, "fmt")
+        formatter.row(
+            [
+                f"{getattr(stock, col):{getattr(stock, 'fmt').get(col)}}"
+                for col in columns
+            ]
         )
 
 
@@ -37,9 +57,7 @@ class TextTableFormatter(TableFormatter):
     """
 
     def headings(self, *headers):
-        for h in headers:
-            print(f"{h:>10s}", end=" ")
-        print()
+        print(" ".join([f"{header.capitalize():>10s}" for header in headers]))
         print(("-" * 10 + " ") * len(headers))
 
     def row(self, rowdata):
@@ -58,7 +76,6 @@ class CSVTableFormatter(TableFormatter):
         print(",".join(headers))
 
     def row(self, rowdata):
-        print(rowdata)
         print(",".join(rowdata))
 
 
