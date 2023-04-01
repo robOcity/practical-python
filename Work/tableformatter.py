@@ -3,6 +3,20 @@
 # Classes for formatting data as tables
 
 
+def create_format(fmt):
+    TableFormatter = None
+    if fmt == "txt":
+        return TextTableFormatter()
+    elif fmt == "csv":
+        return CSVTableFormatter()
+    elif fmt == "html":
+        return HTMLTableFormatter()
+    else:
+        raise RuntimeError(
+            f"Cannot format as directed. No '{fmt}' formatter is available."
+        )
+
+
 class TableFormatter:
     def headings(self, *headers):
         """

@@ -65,7 +65,7 @@ def print_report(report, formatter):
     print(f"\nCost: ${total_cost: ,.2f}   Change: ${aggregate_change: ,.2f}")
 
 
-def portfolio_report(portfolio_data_file, prices_data_file, delimeter=","):
+def portfolio_report(portfolio_data_file, prices_data_file, delimeter=",", fmt="txt"):
     """
     Generates a report for a portfolio of stocks and current prices.
 
@@ -74,8 +74,7 @@ def portfolio_report(portfolio_data_file, prices_data_file, delimeter=","):
     portfolio = read_portfolio(portfolio_data_file, delimeter)
     prices = read_prices(prices_data_file, delimeter)
     report = make_report(portfolio, prices)
-    formatter = tableformatter.HTMLTableFormatter()
-    print_report(report, formatter)
+    print_report(report, tableformatter.create_format(fmt))
 
 
 def main(argv):
@@ -83,9 +82,17 @@ def main(argv):
     Provide portfolio and price data files to generate an investment report.
     """
 
-    if len(argv) != 3:
-        raise SystemExit(f"Usage: {argv[0]} portfolio_csv prices_csv")
-    portfolio_report(argv[1], argv[2])
+    if len(argv) < 3:
+        raise SystemExit(f"Usage: {argv[0]} portfolio_csv prices_csv fmt='txt'")
+    elif len(argv) == 3:
+        portfolio_report(argv[1], argv[2])
+    elif len(argv) == 4:
+        fmt = argv[3].strip().lower()[4:]
+        portfolio_report(argv[1], argv[2], fmt=fmt)
+    else:
+        raise RuntimeError(
+            "Usage: python report.py portfolio_csv prices_csv [fmt=txt, csv, or html]"
+        )
 
 
 if __name__ == "__main__":
