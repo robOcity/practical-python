@@ -23,6 +23,7 @@ class Stock:
             + f"{self.price:{self.fmt.get('price')}})"
         )
 
+    @property
     def cost(self) -> float:
         return self.shares * self.price
 
