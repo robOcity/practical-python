@@ -15,7 +15,7 @@ def create_formatter(fmt):
     elif fmt == "html":
         return HTMLTableFormatter()
     else:
-        raise RuntimeError(
+        raise FormatError(
             f"Cannot format as directed. No '{fmt}' formatter is available."
         )
 
@@ -92,3 +92,7 @@ class HTMLTableFormatter(TableFormatter):
 
     def format_table_row(self, data):
         return "<tr>" + "".join(["<td>" + d + "</td>" for d in data]) + "</tr>"
+
+
+class FormatError(Exception):
+    pass
