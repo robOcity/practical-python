@@ -4,6 +4,8 @@
 
 
 class Stock:
+    __slots__ = ("name", "shares", "price", "fmt")
+
     def __init__(
         self,
         name: str,
