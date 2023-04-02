@@ -12,11 +12,6 @@ def parse_stock_data(lines):
     return rows
 
 
-def select_columns(rows, indices):
-    for row in rows:
-        yield [row[index] for index in indices]
-
-
 def convert_types(rows, types):
     for row in rows:
         yield [func(val) for func, val in zip(types, row)]
@@ -27,8 +22,23 @@ def make_dicts(rows, headers):
         yield dict(zip(headers, row))
 
 
+def select_columns(rows, indices):
+    for row in rows:
+        yield [row[index] for index in indices]
+
+
+def filter_symbols(rows, names):
+    for row in rows:
+        if row["name"] in names:
+            yield row
+
+
 if __name__ == "__main__":
+    import report
+
+    portfolio = report.read_portfolio("Data/portfolio.csv")
     lines = follow("Data/stocklog.csv")
     rows = parse_stock_data(lines)
+    rows = filter_symbols(rows, portfolio)
     for row in rows:
         print(row)
