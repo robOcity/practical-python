@@ -6,6 +6,7 @@
 import fileparse
 import tableformatter
 from stock import Stock
+from portfolio import Portfolio
 
 
 def read_portfolio(filename, delimeter=","):
@@ -22,7 +23,8 @@ def read_portfolio(filename, delimeter=","):
             types=[str, int, float],
             delimiter=delimeter,
         )
-    return [Stock(sd["name"], sd["shares"], sd["price"]) for sd in stock_dicts]
+    portfolio = [Stock(sd["name"], sd["shares"], sd["price"]) for sd in stock_dicts]
+    return Portfolio(portfolio)
 
 
 def read_prices(filename, delimeter=","):
