@@ -15,24 +15,19 @@ def parse_stock_data(lines):
 
 
 def convert_types(rows, types):
-    for row in rows:
-        yield [func(val) for func, val in zip(types, row)]
+    return ((func(val) for func, val in zip(types, row)) for row in rows)
 
 
 def make_dicts(rows, headers):
-    for row in rows:
-        yield dict(zip(headers, row))
+    return (dict(zip(headers, row)) for row in rows)
 
 
 def select_columns(rows, indices):
-    for row in rows:
-        yield [row[index] for index in indices]
+    return ((row[index] for index in indices) for row in rows)
 
 
 def filter_symbols(rows, names):
-    for row in rows:
-        if row["name"] in names:
-            yield row
+    return (row for row in rows if row["name"] in names)
 
 
 def parse_stock_data(lines):
@@ -68,7 +63,7 @@ def main(argv):
         ticker(argv[1], argv[2], fmt=fmt)
     else:
         raise RuntimeError(
-            "Usage: python report.py portfolio_csv prices_csv [fmt=txt, csv, or html]"
+            "Usage: python ticker.py portfolio_csv prices_csv [fmt=txt, csv, or html]"
         )
 
 
