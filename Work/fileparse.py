@@ -12,6 +12,7 @@ def parse_csv(
     types: List[Callable] = None,
     delimiter: str = ",",
     has_headers: bool = True,
+    silence_errors: bool = False,
 ) -> Union[List[Dict[str, str]], List[Tuple[Any, ...]]]:
     """
     Parses a CSV file into a list of records as a list of dicts or tuples.
@@ -27,19 +28,21 @@ def parse_csv(
             select = header
         if not types:
             types = [str for col in header]
-        try:
-            records = [
-                {
-                    name: type(value)
-                    for type, name, value in zip(types, header, row)
-                    if name in select
-                }
-                for row in rows
-                if row
-            ]
-        except ValueError as ve:
-            print("Couldn't convert data. Reason: ", ve)
-            raise
+        for row_num, row in enumerate(rows):
+            try:
+                if row:
+                    records.append(
+                        {
+                            name: type(value)
+                            for type, name, value in zip(types, header, row)
+                            if name in select
+                        }
+                    )
+            except ValueError as ve:
+                if not silence_errors:
+                    print(f"row {row_num}: Couldn't convert {row}")
+                    print(f"Row {row_num}: Reason: {ve}")
+                continue
     else:
         records = dict(
             [tuple([type(val) for type, val in zip(types, row)]) for row in rows if row]

@@ -9,19 +9,19 @@ from stock import Stock
 from portfolio import Portfolio
 
 
-def read_portfolio(filename, delimeter=","):
+def read_portfolio(filename, **opts):
     """
     Reads file provide and returns a list of dicts of stock holdings {name, shares, price}.
 
     Use the delimeter parameter to provide an alternate (not comma) character.
     """
-    stock_dicts = []
+    stock_dicts = []s
     with open(filename, "rt") as file_handle:
         stock_dicts = fileparse.parse_csv(
             file_handle,
             select=["name", "shares", "price"],
             types=[str, int, float],
-            delimiter=delimeter,
+            **opts,  # e.g., silence_errors = True
         )
     portfolio = [Stock(**sd) for sd in stock_dicts]
     return Portfolio(portfolio)
