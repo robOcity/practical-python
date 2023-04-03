@@ -55,7 +55,7 @@ def print_report(report, formatter):
     """
     Prints a well-formatted report given a list of name, shares, change data.
     """
-    formatter.headings("Name", "Shares", "Price", "Change")
+    formatter.headings(["Name", "Shares", "Price", "Change"])
 
     total_cost, aggregate_change = 0, 0
     for name, shares, price, change in report:

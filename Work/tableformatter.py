@@ -3,40 +3,6 @@
 # Classes for formatting data as tables
 
 
-def create_formatter(fmt):
-    """
-    Factory method for TableFormatters.
-    """
-    TableFormatter = None
-    if fmt == "txt":
-        return TextTableFormatter()
-    elif fmt == "csv":
-        return CSVTableFormatter()
-    elif fmt == "html":
-        return HTMLTableFormatter()
-    else:
-        raise FormatError(
-            f"Cannot format as directed. No '{fmt}' formatter is available."
-        )
-
-
-def print_table(portfolio, columns, formatter):
-    """
-    Prints a table of Stocks as determined by the configured TableFormatter.
-    """
-    fmt, rowdata = {}, []
-    formatter.headings(columns)
-    for stock in portfolio:
-        if not fmt:
-            fmt = getattr(stock, "fmt")
-        formatter.row(
-            [
-                f"{getattr(stock, col):{getattr(stock, 'fmt').get(col)}}"
-                for col in columns
-            ]
-        )
-
-
 class TableFormatter:
     def headings(self, *headers):
         """
@@ -56,7 +22,7 @@ class TextTableFormatter(TableFormatter):
     Emit a table in plain-text format.
     """
 
-    def headings(self, *headers):
+    def headings(self, headers):
         print(" ".join([f"{header.capitalize():>10s}" for header in headers]))
         print(("-" * 10 + " ") * len(headers))
 
@@ -96,3 +62,29 @@ class HTMLTableFormatter(TableFormatter):
 
 class FormatError(Exception):
     pass
+
+
+def create_formatter(fmt):
+    """
+    Factory method for TableFormatters.
+    """
+    TableFormatter = None
+    if fmt == "txt":
+        return TextTableFormatter()
+    elif fmt == "csv":
+        return CSVTableFormatter()
+    elif fmt == "html":
+        return HTMLTableFormatter()
+    else:
+        raise FormatError(
+            f"Cannot format as directed. No '{fmt}' formatter is available."
+        )
+
+
+def print_table(rows, columns, formatter):
+    """
+    Prints a table of Stocks as determined by the configured TableFormatter.
+    """
+    formatter.headings(columns)
+    for row in rows:
+        formatter.row([str(getattr(row, col)) for col in columns])
