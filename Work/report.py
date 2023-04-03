@@ -23,7 +23,7 @@ def read_portfolio(filename, delimeter=","):
             types=[str, int, float],
             delimiter=delimeter,
         )
-    portfolio = [Stock(sd["name"], sd["shares"], sd["price"]) for sd in stock_dicts]
+    portfolio = [Stock(**sd) for sd in stock_dicts]
     return Portfolio(portfolio)
 
 
