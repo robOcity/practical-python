@@ -15,7 +15,7 @@ def read_portfolio(filename, **opts):
 
     Use the delimeter parameter to provide an alternate (not comma) character.
     """
-    stock_dicts = []s
+    stock_dicts = []
     with open(filename, "rt") as file_handle:
         stock_dicts = fileparse.parse_csv(
             file_handle,
