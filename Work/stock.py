@@ -4,8 +4,6 @@
 
 
 class Stock:
-    __slots__ = ("name", "shares", "price", "fmt")
-
     def __init__(
         self,
         name: str,
@@ -13,6 +11,7 @@ class Stock:
         price: float,
         fmt=dict([("name", "s"), ("shares", "_d"), ("price", ".2f")]),
     ):
+        print(name, shares, price)
         self.name = name.upper()
         self.shares = shares
         self.price = price
