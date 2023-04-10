@@ -24,21 +24,17 @@ class Portfolio:
     def append(self, stock):
         if not isinstance(stock, Stock):
             raise TypeError("Expecting a Stock instance.")
-        print(f"adding stock: {stock}")
         self.stocks.append(stock)
 
     @classmethod
     def from_csv(cls, lines, **opts):
         self = cls()
-
         portdicts = parse_csv(
             lines, select=["name", "shares", "price"], types=[str, int, float], **opts
         )
 
         for d in portdicts:
-            print(d)
             stock = Stock(**d)
-
             self.append(stock)
 
         return self

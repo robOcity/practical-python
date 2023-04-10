@@ -5,15 +5,14 @@
 
 import sys
 import report
-from stock import Stock
+from portfolio import Portfolio
 
 
 def portfolio_cost(filename):
     "returns the total cost to purchase the portfolio contained in file"
-    total_cost = 0.0
-
-    portfolio = report.read_portfolio(filename)
-    return sum([stock.cost for stock in portfolio])
+    with open(filename, "rt") as file_handle:
+        portfolio = Portfolio.from_csv(file_handle)
+        return portfolio.total_cost
 
 
 def main(argv):

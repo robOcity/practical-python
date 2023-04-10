@@ -4,7 +4,7 @@
 
 
 class TableFormatter:
-    def headings(self, *headers):
+    def headings(self, headers):
         """
         Emit the table headings.
         """
@@ -37,7 +37,7 @@ class CSVTableFormatter(TableFormatter):
     Emit portfolio data as a in CSV format.
     """
 
-    def headings(self, *headers):
+    def headings(self, headers):
         print(headers)
         print(",".join(headers))
 
@@ -50,7 +50,7 @@ class HTMLTableFormatter(TableFormatter):
     Emit portfolio data as an HTML table
     """
 
-    def headings(self, *headers):
+    def headings(self, headers):
         print(self.format_table_row(headers))
 
     def row(self, rowdata):

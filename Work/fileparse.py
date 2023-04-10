@@ -47,5 +47,4 @@ def parse_csv(
         records = dict(
             [tuple([type(val) for type, val in zip(types, row)]) for row in rows if row]
         )
-
     return records

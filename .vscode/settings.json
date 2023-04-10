@@ -1,4 +1,15 @@
 {
     "python.formatting.provider": "black",
-    "python.terminal.executeInFileDir": true
+    "python.terminal.executeInFileDir": true,
+    "python.testing.pytestArgs": [
+        "Test"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.cwd": "",
+    "python.analysis.extraPaths": [
+        "./Work",
+        "./Test"
+    ],
+    "python.autoComplete.extraPaths": []
 }
