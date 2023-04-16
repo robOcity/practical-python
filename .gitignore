@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 Work/junk.py
 Work/Data/stocklog.csv
+.DS_Store
